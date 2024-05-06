@@ -48,6 +48,8 @@ function draw () {
   }
 }
 
+//maria test
+
 function keyTyped() {
   if (key == '!') {
     saveBlocksImages();
