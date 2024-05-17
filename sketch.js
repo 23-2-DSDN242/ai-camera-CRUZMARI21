@@ -3,9 +3,9 @@ let maskImg=null;
 let renderCounter=0;
 
 // change these three lines as appropiate
-let sourceFile = "HotAirBalloon_1.webp";
+let sourceFile = "Mountain 1.png";
 let maskFile   = "mask_1.png";
-let outputFile = "output_1.png";
+let outputFile = "Mountain 1.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
@@ -18,9 +18,10 @@ function setup () {
 
   imageMode(CENTER);
   noStroke();
-  background(255, 0, 0);
+  background(0, 0, 128);
   sourceImg.loadPixels();
   maskImg.loadPixels();
+  colorMode(HSB)
 }
 
 function draw () {
