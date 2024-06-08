@@ -3,13 +3,15 @@ let maskImg=null;
 let renderCounter=0;
 
 // change these three lines as appropiate
-let sourceFile = "Mountain 1.png";
+let sourceFile = "input_1.jpg";
 let maskFile   = "mask_1.png";
-let outputFile = "Mountain 1.png";
+let outputFile = "output_1.png";
 
 function preload() {
   sourceImg = loadImage(sourceFile);
   maskImg = loadImage(maskFile);
+
+
 }
 
 function setup () {
@@ -24,6 +26,11 @@ function setup () {
   colorMode(HSB)
 }
 
+let X_STOP = 640;
+let Y_STOP = 480;
+let OFFSET = 6;
+
+let renderCounter=5;
 function draw () {
   for(let i=0;i<4000;i++) {
     let x = floor(random(sourceImg.width));
@@ -44,8 +51,8 @@ function draw () {
   if(renderCounter > 10) {
     console.log("Done!")
     noLoop();
-    // uncomment this to save the result
-    // saveArtworkImage(outputFile);
+    //uncomment this to save the result
+    saveArtworkImage(outputFile);
   }
 }
 
