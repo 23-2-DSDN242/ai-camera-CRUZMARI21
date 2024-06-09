@@ -1,6 +1,5 @@
 let sourceImg=null;
 let maskImg=null;
-let renderCounter=0;
 
 // change these three lines as appropiate
 let sourceFile = "input_1.jpg";
@@ -10,8 +9,6 @@ let outputFile = "output_1.png";
 function preload() {
   sourceImg = loadImage(sourceFile);
   maskImg = loadImage(maskFile);
-
-
 }
 
 function setup () {
@@ -23,40 +20,67 @@ function setup () {
   background(0, 0, 128);
   sourceImg.loadPixels();
   maskImg.loadPixels();
-  colorMode(HSB)
+  colorMode(HSB);
 }
 
-let X_STOP = 640;
-let Y_STOP = 480;
-let OFFSET = 6;
+let X_STOP = 650;
+let Y_STOP = 240;
+
+let OFFSET = 100;
 
 let renderCounter=5;
 function draw () {
-  for(let i=0;i<4000;i++) {
-    let x = floor(random(sourceImg.width));
-    let y = floor(random(sourceImg.height));
-    let pix = sourceImg.get(x, y);
-    let mask = maskImg.get(x, y);
-    fill(pix);
-    if(mask[0] > 128) {
-      let pointSize = 10;
-      ellipse(x, y, pointSize, pointSize);
-    }
-    else {
-      let pointSize = 20;
-      rect(x, y, pointSize, pointSize);    
+  angleMode[DEGREES];
+  let num_lines_to_draw = 40;
+  // get one scanline
+  for(let j=renderCounter; j<renderCounter+num_lines_to_draw && j<1080; j++) {
+    for(let i=5; i<X_STOP; i++) {
+      colorMode(RGB);
+      let mask = maskImg.get(i, j);
+
+      // let changeAmount = sin(i*2) * 255
+      //let pix = [changeAmount,0,255,255]
+      
+      
+      if (mask[1] > 128) {
+       pix = sourceImg.get(i, j);
+     }
+     else {
+
+   // let wave = sin(j*8);
+   // let slip = map(wave, -1,1, -OFFSET, OFFSET);
+   // pix = sourceImg.get(i+slip, j);
+
+    let sum_rgb = [0, 0, 0]
+    let num_cells = 0;
+      for(let wx=-OFFSET;wx<OFFSET;wx++){
+      for (let wy=-OFFSET;wy<OFFSET;wy++) {
+      let pix = sourceImg.get(i+wx, j+wy);
+       for(let c=0; c<3; c++) {
+       sum_rgb[c] += pix[c];
+      }
+       num_cells += 1;
+        }
+       }
+        for(let c=0; c<3; c++) {
+          pix[c] = int(sum_rgb[c] / num_cells);
+        }        
+      }
+
+      set(i, j, pix);
     }
   }
-  renderCounter = renderCounter + 1;
-  if(renderCounter > 10) {
+  renderCounter = renderCounter + num_lines_to_draw;
+  updatePixels();
+
+  // print(renderCounter);
+  if(renderCounter > Y_STOP) {
     console.log("Done!")
     noLoop();
-    //uncomment this to save the result
-    saveArtworkImage(outputFile);
+    // uncomment this to save the result
+    // saveArtworkImage(outputFile);
   }
 }
-
-//maria test
 
 function keyTyped() {
   if (key == '!') {
