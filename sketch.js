@@ -1,3 +1,4 @@
+
 let sourceImg=null;
 let maskImg=null;
 
@@ -27,6 +28,7 @@ function setup () {
 
 //let X_STOP = 650;
 //let Y_STOP = 480;
+
 let X_STOP = 1920;
 let Y_STOP = 1080;
 let OFFSET = 10; 
@@ -45,6 +47,7 @@ function draw () {
      // let pix =[changeAmount, 0, 255, 255]
      //  if (mask[1] > 128) {
          pix = sourceImg.get(i, j);
+         
    //   }
     //  else {  
       let wave = sin(j+8);
@@ -96,5 +99,8 @@ function draw () {
 function keyTyped() {
   if (key == '!') {
     saveBlocksImages();
+
+
+
   }
 }
