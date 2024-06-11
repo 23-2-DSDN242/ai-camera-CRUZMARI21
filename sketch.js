@@ -10,6 +10,7 @@ let outputFile = "output_1.png";
 function preload() {
   sourceImg = loadImage(sourceFile);
   maskImg = loadImage(maskFile);
+  //textImg = loadImage("texture.png");
 }
 
 function setup () {
@@ -22,6 +23,7 @@ function setup () {
   sourceImg.loadPixels();
   maskImg.loadPixels();
   colorMode(HSB);
+  textImg.loadPixels();
 
 
 }
@@ -42,11 +44,8 @@ function draw () {
     for(let i=0; i<X_STOP; i++) {
       colorMode(RGB);
       let mask = maskImg.get(i, j);
-     
-     // let changeAmount = sin(i*2) * 255  //( i ^ j ) & 255 
-     // let pix =[changeAmount, 0, 255, 255]
-     //  if (mask[1] > 128) {
          pix = sourceImg.get(i, j);
+         let tex = textImg.get(i, j);
          
    //   }
     //  else {  
@@ -55,17 +54,15 @@ function draw () {
       
       pix = sourceImg.get(i+slip, j);
       
-      //  let sum_rgb = [0, 0, 0]
-     // let num_cells = 0;
-       // for(let wx=-OFFSET;wx<OFFSET;wx++){
-      //  for (let wy=-OFFSET;wy<OFFSET;wy++) {
-      
-       // let pix = sourceImg.get(i+wx, j+wy);
-       
-     // for(let c=0; c<3; c++) {
-      // sum_rgb[c] += pix[c];
-     // }
-     //  num_cells += 1;
+      let sum_rgb = [0, 0, 0]
+      let num_cells = 0;
+      for(let wx=-OFFSET;wx<OFFSET;wx++){
+      for (let wy=-OFFSET;wy<OFFSET;wy++) {
+      let pix = sourceImg.get(i+wx, j+wy);
+      for(let c=0; c<3; c++) {
+      sum_rgb[c] += pix[c];
+      }
+      num_cells += 1;
      //   } 
      //  }
       //  for(let c=0; c<3; c++) {
@@ -77,9 +74,7 @@ function draw () {
 
       
       //Draw white mountains pexels
-      fill('white') 
-      noStroke()
-      ellipse(50,50,50,50)
+      
 
     
     }
